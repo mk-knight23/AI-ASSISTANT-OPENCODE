@@ -1,67 +1,106 @@
-#!/bin/bash
-# OpenCode Setup Script
+#!/usr/bin/env bash
+# =============================================================================
+# Opencode Setup Script
+# Sets up Opencode with free Nvidia Build tier + optional paid providers
 # Run: chmod +x setup.sh && ./setup.sh
+# =============================================================================
 
-set -e
-echo "🚀 Setting up OpenCode..."
+set -euo pipefail
 
-# 1. Install OpenCode
-echo "📦 Installing OpenCode..."
-if command -v npm &> /dev/null; then
-  npm install -g opencode-ai
-  echo "✅ OpenCode installed via npm"
-elif command -v brew &> /dev/null; then
-  brew install opencode-ai/tap/opencode
-  echo "✅ OpenCode installed via Homebrew"
+BLUE='\033[0;34m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; NC='\033[0m'
+log()  { echo -e "${BLUE}[opencode-setup]${NC} $*"; }
+ok()   { echo -e "${GREEN}[✓]${NC} $*"; }
+warn() { echo -e "${YELLOW}[!]${NC} $*"; }
+tip()  { echo -e "${CYAN}[tip]${NC} $*"; }
+
+log "Opencode Setup (with FREE tier)"
+
+# Install
+if command -v opencode >/dev/null 2>&1; then
+  ok "Opencode already installed"
 else
-  echo "📦 Manual install: https://github.com/sst/opencode"
-  echo "   Or: curl -fsSL https://opencode.ai/install | bash"
+  log "Installing Opencode..."
+  npm install -g opencode-ai && ok "Opencode installed" || \
+  { warn "npm install failed. Try: cargo install opencode"; }
 fi
 
-# 2. Set up free providers (no credit card!)
-echo ""
-echo "🆓 Setting up FREE providers..."
-echo ""
-echo "Option A: Nvidia Build (FREE — best free models)"
-echo "  1. Sign up at: https://build.nvidia.com"
-echo "  2. Get free API key"
-echo "  3. Add to config: provider=nvidia-build"
-echo "  Best models: Kimi K2.5, MiniMax M2.5"
-echo ""
-echo "Option B: OpenRouter (FREE models)"
-echo "  1. Sign up at: https://openrouter.ai"
-echo "  2. Get API key"
-echo "  3. Filter ':free' models"
-echo ""
-
-# 3. Configure OpenCode
-echo "⚙️  Setting up OpenCode config..."
-mkdir -p ~/.config/opencode
-cp configs/opencode.json ~/.config/opencode/config.json
-echo "✅ Config copied to ~/.config/opencode/config.json"
-echo "⚠️  Edit it and add your API keys"
-
-# 4. Install skills
-echo "🎯 Installing Antigravity Awesome Skills for OpenCode..."
-npx antigravity-awesome-skills
+# Config directory
+CONFIG_DIR="$HOME/.config/opencode"
+mkdir -p "$CONFIG_DIR"
 
 echo ""
-echo "✨ OpenCode is ready!"
+tip "Nvidia Build is FREE. Get your key at: https://build.nvidia.com"
 echo ""
-echo "Key Commands:"
-echo "  opencode             # Start interactive session"
-echo "  opencode -m <model>  # Use specific model"
-echo "  opencode --list      # List available models"
+
+# Collect API keys
+read -p "Nvidia Build API key (free at build.nvidia.com): " NVIDIA_KEY
+read -p "Anthropic API key (optional - for best quality): " ANTHROPIC_KEY
+read -p "OpenRouter API key (optional - many free models): " OR_KEY
+
+# Write config
+DEFAULT_PROVIDER="nvidia"
+[[ -z "$NVIDIA_KEY" ]] && DEFAULT_PROVIDER="anthropic"
+[[ -z "$NVIDIA_KEY" && -z "$ANTHROPIC_KEY" ]] && DEFAULT_PROVIDER="ollama"
+
+cat > "$CONFIG_DIR/config.toml" << TOML_EOF
+[default]
+provider = "${DEFAULT_PROVIDER}"
+model = "kimi-k2-5"
+max_tokens = 128000
+show_tool_calls = true
+TOML_EOF
+
+[[ -n "$ANTHROPIC_KEY" ]] && cat >> "$CONFIG_DIR/config.toml" << TOML_EOF
+
+[providers.anthropic]
+api_key = "${ANTHROPIC_KEY}"
+model = "claude-sonnet-4-6"
+TOML_EOF
+
+[[ -n "$NVIDIA_KEY" ]] && cat >> "$CONFIG_DIR/config.toml" << TOML_EOF
+
+[providers.nvidia]
+api_key = "${NVIDIA_KEY}"
+model = "kimi-k2-5"
+TOML_EOF
+
+[[ -n "$OR_KEY" ]] && cat >> "$CONFIG_DIR/config.toml" << TOML_EOF
+
+[providers.openrouter]
+api_key = "${OR_KEY}"
+model = "google/gemini-flash-1.5"
+TOML_EOF
+
+ok "Config saved to $CONFIG_DIR/config.toml"
+
+# Project instructions
+mkdir -p .opencode
+if [[ ! -f .opencode/instructions.md ]]; then
+  cat > .opencode/instructions.md << 'EOF'
+# Project Instructions
+
+## Stack
+<!-- Fill in your technology stack -->
+
+## Standards
+- Follow existing patterns
+- Handle all errors explicitly
+- Tests must pass before done
+
+## Commands
+<!-- Fill in project commands -->
+EOF
+  ok "Created .opencode/instructions.md"
+fi
+
 echo ""
-echo "PLAN→EXECUTE Pattern (costs almost zero):"
-echo "  1. Plan with Claude Opus: opencode -m claude-opus-4-6"
-echo "     'Create a plan for building a REST API with auth'"
-echo "  2. Execute with Kimi K2 (FREE): opencode -m moonshotai/kimi-k2"
-echo "     'Now implement the plan'"
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${GREEN}  Opencode Setup Complete!${NC}"
+echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
-echo "Providers in config:"
-echo "  anthropic  — Claude models (paid)"
-echo "  openai     — GPT models (paid)"
-echo "  nvidia     — Kimi K2, MiniMax (FREE)"
-echo "  openrouter — Mixed :free models (FREE)"
-echo "  google     — Gemini models (free tier)"
+echo "Usage:"
+echo "  opencode                           Interactive TUI"
+echo "  opencode 'Fix the failing tests'   Direct task"
+echo "  git diff | opencode 'Review this'  Pipe input"
+echo ""
+tip "PLAN→EXECUTE: Plan with claude-opus-4-6, execute with nvidia/kimi-k2-5"
