@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Opencode — Open source AI terminal agent. LSP-enabled, multi-provider, free with Nvidia Build or OpenRouter. The hacker's choice for zero-cost AI coding." />
+  <title>Opencode — AI Assistant Showcase</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#020617;--surface:#0F172A;--surface-2:#1E293B;--border:rgba(148,163,184,.1);--text:#F8FAFC;--muted:#94A3B8;--dim:#64748B;--accent:#F59E0B;--accent-glow:rgba(245,158,11,.12);--green:#22C55E;--font-h:'Space Grotesk',sans-serif;--font-b:'DM Sans',sans-serif;--font-m:'JetBrains Mono',monospace;--r:12px;--r-sm:8px;--t:200ms cubic-bezier(.4,0,.2,1)}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+    body{background:var(--bg);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.65;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--surface)}::-webkit-scrollbar-thumb{background:#334155;border-radius:3px}
+    :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+    .nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(2,6,23,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    .nav-back{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:14px;transition:color var(--t)}.nav-back:hover{color:var(--text)}
+    .nav-brand{font-family:var(--font-h);font-weight:700;font-size:16px;display:flex;align-items:center;gap:8px}
+    .brand-dot{width:8px;height:8px;background:var(--accent);border-radius:50%;box-shadow:0 0 8px var(--accent);animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.8)}}
+    .nav-badge{padding:4px 12px;background:var(--accent-glow);border:1px solid rgba(245,158,11,.3);border-radius:100px;font-size:12px;font-weight:600;color:var(--accent)}
+    .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden}
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 60% at 50% 50%,black,transparent)}
+    .hero-glow{position:absolute;width:700px;height:500px;top:50%;left:50%;transform:translate(-50%,-65%);background:radial-gradient(ellipse,rgba(245,158,11,.08) 0%,transparent 70%);pointer-events:none}
+    .hero-tag{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:var(--accent-glow);border:1px solid rgba(245,158,11,.3);border-radius:100px;font-size:13px;font-weight:500;color:var(--accent);margin-bottom:28px;position:relative;z-index:1}
+    .hero-title{font-family:var(--font-h);font-size:clamp(36px,6vw,80px);font-weight:700;line-height:1.05;letter-spacing:-.03em;margin-bottom:20px;position:relative;z-index:1}
+    .title-grad{background:linear-gradient(135deg,var(--accent),#FCD34D,#FB923C);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-desc{font-size:clamp(15px,2vw,19px);color:var(--muted);max-width:600px;margin:0 auto 40px;position:relative;z-index:1}
+    .hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1}
+    .btn-p{padding:13px 26px;background:var(--accent);color:#000;border-radius:var(--r-sm);font-weight:700;font-size:14px;transition:all var(--t);display:inline-flex;align-items:center;gap:8px}
+    .btn-p:hover{background:#d97706;transform:translateY(-2px);box-shadow:0 8px 28px rgba(245,158,11,.3)}
+    .btn-s{padding:13px 26px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:var(--r-sm);font-weight:600;font-size:14px;transition:all var(--t);display:inline-flex;align-items:center;gap:8px}
+    .btn-s:hover{border-color:rgba(245,158,11,.4);background:var(--surface-2);transform:translateY(-1px)}
+    .stats{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);background:var(--border)}
+    .stat{background:var(--surface);padding:24px;text-align:center}
+    .stat-v{font-family:var(--font-h);font-size:26px;font-weight:700;color:var(--accent);display:block;margin-bottom:4px}
+    .stat-l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .s{padding:80px 0}.container{max-width:1200px;margin:0 auto;padding:0 24px}
+    .s-head{text-align:center;margin-bottom:52px}
+    .eyebrow{display:inline-block;font-size:11px;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
+    .s-title{font-family:var(--font-h);font-size:clamp(26px,4vw,42px);font-weight:700;letter-spacing:-.02em;margin-bottom:14px}
+    .s-desc{font-size:16px;color:var(--muted);max-width:520px;margin:0 auto}
+    .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+    .feat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px;transition:all var(--t)}
+    .feat-card:hover{border-color:rgba(245,158,11,.3);transform:translateY(-2px)}
+    .feat-icon{width:44px;height:44px;background:var(--accent-glow);border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+    .feat-icon svg{width:22px;height:22px;stroke:var(--accent)}
+    .feat-title{font-family:var(--font-h);font-size:17px;font-weight:600;margin-bottom:8px}
+    .feat-desc{font-size:14px;color:var(--muted)}
+    /* PROVIDERS */
+    .providers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+    .provider{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:20px;transition:all var(--t)}
+    .provider:hover{border-color:rgba(245,158,11,.3)}
+    .provider-name{font-family:var(--font-h);font-size:15px;font-weight:600;margin-bottom:4px}
+    .provider-models{font-size:12px;color:var(--muted);margin-bottom:10px}
+    .provider-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:100px;font-size:10px;font-weight:700}
+    .badge-free{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+    .badge-paid{background:rgba(245,158,11,.12);color:var(--accent);border:1px solid rgba(245,158,11,.3)}
+    /* COST TABLE */
+    .cost-table{width:100%;border-collapse:collapse}
+    .cost-table th,.cost-table td{padding:12px 16px;text-align:left;border:1px solid var(--border);font-size:14px}
+    .cost-table th{background:var(--surface);font-family:var(--font-h);font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase}
+    .cost-table tr:hover td{background:var(--surface-2)}
+    .cost-wrap{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;overflow-x:auto}
+    /* TERMINAL */
+    .term{background:#0A0E1A;border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+    .term-head{padding:10px 16px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+    .dots{display:flex;gap:6px}.d{width:10px;height:10px;border-radius:50%}.dr{background:#FF5F57}.dy{background:#FFBD2E}.dg{background:#28C840}
+    .term-title{font-family:var(--font-m);font-size:12px;color:var(--dim);flex:1;text-align:center}
+    .term-body{padding:20px;font-family:var(--font-m);font-size:13px;line-height:1.85}
+    .p{color:var(--accent)}.cmd{color:var(--text)}.out{color:var(--muted)}.ok{color:var(--green)}.comment{color:#546E7A}.info{color:#3B82F6}
+    footer{background:var(--surface);border-top:1px solid var(--border);padding:40px 24px;text-align:center}
+    .foot-brand{font-family:var(--font-h);font-size:18px;font-weight:700;margin-bottom:8px}
+    .foot-desc{color:var(--muted);font-size:14px;margin-bottom:16px}
+    .foot-links{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:20px}
+    .foot-links a{font-size:13px;color:var(--muted);transition:color var(--t)}.foot-links a:hover{color:var(--accent)}
+    .foot-copy{font-size:12px;color:var(--dim)}
+    .scroll-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),#FCD34D);z-index:200;width:0}
+    .fade{opacity:0;transform:translateY(16px);transition:opacity .5s ease,transform .5s ease}.fade.in{opacity:1;transform:none}
+    @media(max-width:768px){.stats-row{grid-template-columns:repeat(2,1fr)}.hero-btns{flex-direction:column;align-items:center}}
+  </style>
+</head>
+<body>
+  <div class="scroll-bar" id="sb"></div>
+  <nav class="nav">
+    <a href="../index.html" class="nav-back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>All Tools</a>
+    <div class="nav-brand"><div class="brand-dot"></div>Opencode</div>
+    <span class="nav-badge">Open Source</span>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-tag">Open Source · Terminal-First · LSP · Multi-Provider · Free Tier Available</div>
+    <h1 class="hero-title">
+      <span style="display:block">Opencode</span>
+      <span class="title-grad">AI Coding at</span>
+      <span style="display:block">Zero Cost</span>
+    </h1>
+    <p class="hero-desc">The open source AI terminal agent with LSP integration and multi-provider support. Run on completely free models via Nvidia Build (Kimi K2.5, Minimax m2.5) or OpenRouter — powerful AI coding with no subscription required.</p>
+    <div class="hero-btns">
+      <a href="https://opencode.ai" class="btn-p" target="_blank" rel="noopener noreferrer"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>Get Opencode</a>
+      <a href="./README.md" class="btn-s"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>View README</a>
+    </div>
+  </section>
+
+  <div class="stats">
+    <div class="stats-row">
+      <div class="stat"><span class="stat-v">$0</span><span class="stat-l">Free Tier Cost</span></div>
+      <div class="stat"><span class="stat-v">Open Source</span><span class="stat-l">MIT Licensed</span></div>
+      <div class="stat"><span class="stat-v">LSP</span><span class="stat-l">Auto-Loaded</span></div>
+      <div class="stat"><span class="stat-v">10+</span><span class="stat-l">Providers</span></div>
+    </div>
+  </div>
+
+  <!-- FREE TIER SETUP -->
+  <section class="s">
+    <div class="container">
+      <div class="s-head fade">
+        <div class="eyebrow">Free Tier Setup</div>
+        <h2 class="s-title">Zero Cost AI Coding in 5 Minutes</h2>
+        <p class="s-desc">Get a powerful AI coding agent running for free using Nvidia Build's model catalog.</p>
+      </div>
+      <div class="term fade">
+        <div class="term-head">
+          <div class="dots"><div class="d dr"></div><div class="d dy"></div><div class="d dg"></div></div>
+          <span class="term-title">free-tier-setup.sh</span>
+        </div>
+        <div class="term-body">
+          <div><span class="comment"># Step 1: Install Opencode</span></div>
+          <div><span class="p">$</span> <span class="cmd">npm install -g opencode-ai</span></div>
+          <div><span class="ok">✓ Opencode installed</span></div>
+          <br/>
+          <div><span class="comment"># Step 2: Register at build.nvidia.com (free)</span></div>
+          <div><span class="comment"># Get your API key from the dashboard</span></div>
+          <br/>
+          <div><span class="comment"># Step 3: Configure for free Nvidia Build models</span></div>
+          <div><span class="p">$</span> <span class="cmd">cat ~/.opencode/config.json</span></div>
+          <div><span class="out">{</span></div>
+          <div><span class="out">  "provider": "nvidia",</span></div>
+          <div><span class="out">  "baseUrl": "https://integrate.api.nvidia.com/v1",</span></div>
+          <div><span class="out">  "apiKey": "nvapi-your-key-here",</span></div>
+          <div><span class="out">  "model": "nv-us/kimi-k2.5"  // or minimax-m2.5</span></div>
+          <div><span class="out">}</span></div>
+          <br/>
+          <div><span class="comment"># Step 4: Start coding for free</span></div>
+          <div><span class="p">$</span> <span class="cmd">opencode "add error handling to the login endpoint"</span></div>
+          <div><span class="info">→ Using Kimi K2.5 via Nvidia Build (FREE)</span></div>
+          <div><span class="ok">✓ Modified: src/routes/auth.ts</span></div>
+          <div><span class="ok">✓ Cost: $0.00</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="s" style="background:var(--surface)">
+    <div class="container">
+      <div class="s-head fade">
+        <div class="eyebrow">Features</div>
+        <h2 class="s-title">Open Source Power</h2>
+      </div>
+      <div class="feat-grid fade">
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <div class="feat-title">LSP Integration</div>
+          <p class="feat-desc">Automatically loads TypeScript, Python, Go, Rust, Java LSPs. LLM gets semantic type info, import graphs, and diagnostics.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3"/></svg></div>
+          <div class="feat-title">Multi-Provider</div>
+          <p class="feat-desc">Anthropic, OpenAI, Nvidia Build, OpenRouter, Moonshot, Minimax, AliCloudCoding — swap providers in seconds.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <div class="feat-title">Terminal Native</div>
+          <p class="feat-desc">Run anywhere a terminal runs — SSH sessions, CI/CD, Docker containers, remote servers. No GUI required.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="feat-title">Open Source</div>
+          <p class="feat-desc">Fork, customize, self-host for maximum privacy. No vendor lock-in, no per-seat licensing, community-driven.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12h8M12 8v8"/></svg></div>
+          <div class="feat-title">Hacker-Friendly</div>
+          <p class="feat-desc">PAYG or free models. Use Nvidia Build's near-frontier models at $0 cost for mechanical diffs and repetitive edits.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M2 16.1A5 5 0 0 1 5.9 20M2 12.05A9 9 0 0 1 9.95 20M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6M2 20h.01"/></svg></div>
+          <div class="feat-title">Cross-Platform</div>
+          <p class="feat-desc">macOS (Intel + ARM), Windows (x64 + ARM64), Linux (AppImage + .deb). One tool, everywhere.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROVIDERS -->
+  <section class="s">
+    <div class="container">
+      <div class="s-head fade">
+        <div class="eyebrow">Provider Directory</div>
+        <h2 class="s-title">Your Model, Your Rules</h2>
+        <p class="s-desc">Configure any AI provider — from completely free to frontier quality.</p>
+      </div>
+      <div class="providers-grid fade">
+        <div class="provider">
+          <div class="provider-name">Nvidia Build</div>
+          <div class="provider-models">Kimi K2.5, Minimax m2.5, GLM-5</div>
+          <span class="provider-badge badge-free">FREE</span>
+        </div>
+        <div class="provider">
+          <div class="provider-name">OpenRouter</div>
+          <div class="provider-models">100+ models, many free</div>
+          <span class="provider-badge badge-free">FREE OPTIONS</span>
+        </div>
+        <div class="provider">
+          <div class="provider-name">Anthropic</div>
+          <div class="provider-models">Claude Sonnet 4.6, Opus 4.6</div>
+          <span class="provider-badge badge-paid">PAID</span>
+        </div>
+        <div class="provider">
+          <div class="provider-name">OpenAI</div>
+          <div class="provider-models">GPT-5, GPT-5.2</div>
+          <span class="provider-badge badge-paid">PAID</span>
+        </div>
+        <div class="provider">
+          <div class="provider-name">Moonshot (Kimi)</div>
+          <div class="provider-models">Kimi K2.5 (direct API)</div>
+          <span class="provider-badge badge-paid">LOW COST</span>
+        </div>
+        <div class="provider">
+          <div class="provider-name">AliCloudCoding</div>
+          <div class="provider-models">Aggregated open source models</div>
+          <span class="provider-badge badge-free">FREE OPTIONS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COST TABLE -->
+  <section class="s" style="background:var(--surface)">
+    <div class="container">
+      <div class="s-head fade">
+        <div class="eyebrow">Cost Strategy</div>
+        <h2 class="s-title">The PLAN → EXECUTE Pattern</h2>
+        <p class="s-desc">Optimize cost by using the right model for each task type.</p>
+      </div>
+      <div class="cost-wrap fade">
+        <table class="cost-table">
+          <thead>
+            <tr>
+              <th>Task Type</th>
+              <th>Tool</th>
+              <th>Model</th>
+              <th>Est. Monthly Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Architecture / Planning</td><td>Claude Code</td><td>Opus 4.6</td><td style="color:#F59E0B">$$</td></tr>
+            <tr><td>Complex Debugging</td><td>Claude Code</td><td>Sonnet 4.6</td><td style="color:#F59E0B">$</td></tr>
+            <tr><td>Mechanical Diffs</td><td>Opencode</td><td>Minimax m2.5</td><td style="color:#22C55E">FREE</td></tr>
+            <tr><td>Repetitive Refactors</td><td>Opencode</td><td>Kimi K2.5</td><td style="color:#22C55E">FREE</td></tr>
+            <tr><td>Simple CRUD</td><td>Opencode</td><td>OpenRouter free</td><td style="color:#22C55E">FREE</td></tr>
+            <tr><td>PR Review</td><td>Copilot BugBot</td><td>GitHub (included)</td><td style="color:#3B82F6">$20/mo flat</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot-brand" style="color:var(--accent)">Opencode</div>
+    <p class="foot-desc">Open source AI coding agent. Terminal-first, multi-provider, LSP-enabled. AI coding at zero cost.</p>
+    <nav class="foot-links">
+      <a href="https://opencode.ai" target="_blank" rel="noopener noreferrer">Website</a>
+      <a href="https://build.nvidia.com" target="_blank" rel="noopener noreferrer">Nvidia Build (Free)</a>
+      <a href="./README.md">README</a>
+      <a href="../index.html">All Tools</a>
+    </nav>
+    <p class="foot-copy">AI-ASSISTANT-OPENCODE · Showcase by mk-knight23 · March 2026</p>
+  </footer>
+
+  <script>
+    const sb=document.getElementById('sb');
+    window.addEventListener('scroll',()=>{sb.style.width=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100)+'%'},{passive:true});
+    const obs=new IntersectionObserver(entries=>entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*50);obs.unobserve(e.target)}}),{threshold:.1});
+    document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
+  </script>
+</body>
+</html>
