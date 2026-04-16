@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Opencode Setup Script
-# Sets up Opencode with free Nvidia Build tier + optional paid providers
+# 🔓 Opencode Setup Script (Premium Edition)
+# Sets up Opencode with 2026 Free Tier models (DeepSeek-V3, Gemini 2.0).
 # Run: chmod +x setup.sh && ./setup.sh
 # =============================================================================
 
@@ -13,94 +13,77 @@ ok()   { echo -e "${GREEN}[✓]${NC} $*"; }
 warn() { echo -e "${YELLOW}[!]${NC} $*"; }
 tip()  { echo -e "${CYAN}[tip]${NC} $*"; }
 
-log "Opencode Setup (with FREE tier)"
+log "Opencode Mechanical Execution Init..."
 
-# Install
+# 1. Install CLI
 if command -v opencode >/dev/null 2>&1; then
-  ok "Opencode already installed"
+  ok "Opencode CLI is ready."
 else
-  log "Installing Opencode..."
-  npm install -g opencode-ai && ok "Opencode installed" || \
-  { warn "npm install failed. Try: cargo install opencode"; }
+  log "Installing Opencode CLI..."
+  npm install -g @opencode-ai/cli >/dev/null 2>&1 || warn "NPM install failed - ensure Node.js is installed."
 fi
 
-# Config directory
+# 2. Key Collection (2026 Meta)
+echo ""
+tip "Recommended: Get a free key at https://openrouter.ai (Gemini 2.0 Flash is free)."
+tip "Recommended: Get a free key at https://build.nvidia.com (DeepSeek-V3 is free)."
+echo ""
+
+read -p "Nvidia Build API Key (DeepSeek/Llama): " NVIDIA_KEY
+read -p "OpenRouter API Key (Gemini/Mistral): " OR_KEY
+
+# 3. Secure Config Storage
 CONFIG_DIR="$HOME/.config/opencode"
 mkdir -p "$CONFIG_DIR"
 
-echo ""
-tip "Nvidia Build is FREE. Get your key at: https://build.nvidia.com"
-echo ""
-
-# Collect API keys
-read -p "Nvidia Build API key (free at build.nvidia.com): " NVIDIA_KEY
-read -p "Anthropic API key (optional - for best quality): " ANTHROPIC_KEY
-read -p "OpenRouter API key (optional - many free models): " OR_KEY
-
-# Write config
-DEFAULT_PROVIDER="nvidia"
-[[ -z "$NVIDIA_KEY" ]] && DEFAULT_PROVIDER="anthropic"
-[[ -z "$NVIDIA_KEY" && -z "$ANTHROPIC_KEY" ]] && DEFAULT_PROVIDER="ollama"
-
 cat > "$CONFIG_DIR/config.toml" << TOML_EOF
 [default]
-provider = "${DEFAULT_PROVIDER}"
-model = "kimi-k2-5"
-max_tokens = 128000
-show_tool_calls = true
-TOML_EOF
-
-[[ -n "$ANTHROPIC_KEY" ]] && cat >> "$CONFIG_DIR/config.toml" << TOML_EOF
-
-[providers.anthropic]
-api_key = "${ANTHROPIC_KEY}"
-model = "claude-sonnet-4-6"
-TOML_EOF
-
-[[ -n "$NVIDIA_KEY" ]] && cat >> "$CONFIG_DIR/config.toml" << TOML_EOF
+provider = "nvidia"
+model = "deepseek-ai/deepseek-v3"
+max_tokens = 163840
+stream = true
 
 [providers.nvidia]
 api_key = "${NVIDIA_KEY}"
-model = "kimi-k2-5"
-TOML_EOF
-
-[[ -n "$OR_KEY" ]] && cat >> "$CONFIG_DIR/config.toml" << TOML_EOF
+base_url = "https://integrate.api.nvidia.com/v1"
+model = "deepseek-ai/deepseek-v3"
 
 [providers.openrouter]
 api_key = "${OR_KEY}"
-model = "google/gemini-flash-1.5"
+base_url = "https://openrouter.ai/api/v1"
+model = "google/gemini-2.0-flash-exp:free"
 TOML_EOF
 
-ok "Config saved to $CONFIG_DIR/config.toml"
+ok "Config initialized at $CONFIG_DIR/config.toml"
 
-# Project instructions
-mkdir -p .opencode
-if [[ ! -f .opencode/instructions.md ]]; then
-  cat > .opencode/instructions.md << 'EOF'
-# Project Instructions
+# 4. Mechanical Agent Injection
+log "Injecting Mechanical Grunt agent..."
+mkdir -p .opencode/agents
+cat > .opencode/agents/grunt.md << 'EOF'
+# Mechanical Execution Agent
+You are a "Grunt" - a high-speed, zero-cost execution engine.
+Your goal is to perform mechanical code transformations with 100% precision.
 
-## Stack
-<!-- Fill in your technology stack -->
-
-## Standards
-- Follow existing patterns
-- Handle all errors explicitly
-- Tests must pass before done
-
-## Commands
-<!-- Fill in project commands -->
+## Workflow
+1. Read the provided diff or task.
+2. Execute the change exactly as requested.
+3. If uncertainty > 10%, STOP and request a 'Plan' from the Claude assistant.
+4. NEVER invent new logic; only refactor or implement predefined patterns.
 EOF
-  ok "Created .opencode/instructions.md"
-fi
+ok "Mechanical agent injected."
+
+# 5. Switcher Shortcut
+chmod +x ./switch.sh 2>/dev/null || true
+ok "Switcher script enabled (./switch.sh)"
 
 echo ""
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e "${GREEN}  Opencode Setup Complete!${NC}"
+echo -e "${GREEN}  Opencode Ecosystem Setup Complete!           ${NC}"
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
-echo "Usage:"
-echo "  opencode                           Interactive TUI"
-echo "  opencode 'Fix the failing tests'   Direct task"
-echo "  git diff | opencode 'Review this'  Pipe input"
+echo "Mechanical Workflow:"
+echo "  1. PLAN    (Claude):  Write the implementation plan."
+echo "  2. EXECUTE (Opencode): Run './switch.sh nvidia' then 'opencode apply plan'."
+echo "  3. VERIFY  (Cursor):   Visual check and testing."
 echo ""
-tip "PLAN→EXECUTE: Plan with claude-opus-4-6, execute with nvidia/kimi-k2-5"
+log "Run 'opencode' to start the mechanical loop."

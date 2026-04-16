@@ -1,103 +1,33 @@
-# 🚀 AI-ASSISTANT-OPENCODE (Collective Production Edition)
+# 🔓 AI-ASSISTANT-OPENCODE
 
-## 💎 Overview
-Fully production-grade implementation of AI-ASSISTANT-OPENCODE, refactored by the **69-Agent Opencode Collective**.
+![Opencode](https://img.shields.io/badge/Opencode-Open_Source-22C55E?style=for-the-badge&logo=opensourceinitiative)
+![Cost](https://img.shields.io/badge/Cost-Zero_to_Low-22C55E?style=for-the-badge)
+![Status](https://img.shields.io/badge/Ecosystem-Active-blue?style=for-the-badge)
+![Intelligence](https://img.shields.io/badge/Intelligence-DeepSeek_V3_/_Llama_3.x-22C55E?style=for-the-badge)
 
-## 🛡️ Trust & Compliance
-- **CI/CD**: Automated GitHub Actions with Gitleaks security scans.
-- **Security**: Standardized [SECURITY.md](SECURITY.md) protocol.
-- **Design**: Opencode Premium Design Tokens integrated.
+> **"High-performance agentic coding shouldn't require a premium subscription."**
 
-## 🏁 48-Hour Roadmap
-1. Initialize infrastructure via `.github/workflows`.
-2. Set your secrets in GitHub Environment settings.
-3. Deploy to production via Vercel/Docker.
-
-![Opencode](https://img.shields.io/badge/Opencode-Open_Source-F59E0B?style=for-the-badge)
-![Free](https://img.shields.io/badge/Free_Tier-Available-22C55E?style=for-the-badge)
-![Terminal](https://img.shields.io/badge/Interface-Terminal_First-0F172A?style=for-the-badge)
-![License](https://img.shields.io/badge/License-Open_Source-blue?style=for-the-badge)
-
-> **"OpenCode + Nvidia Build: A highly capable, free agentic setup."** — Developer community, 2026
-
-Opencode is the **open source AI coding agent** that runs in your terminal, IDE, or desktop — with LSP integration, multi-provider support, and a near-zero cost path using free model APIs. It's the hacker's choice for cost-effective AI-assisted development and the EXECUTE tool in the PLAN → EXECUTE pattern.
+This repository is a production-grade implementation of the **Opencode** ecosystem. It focuses on using open-source models (via Nvidia Build, OpenRouter, or local hosting) to perform mechanical coding tasks, refactoring, and execution loops at zero or minimal cost.
 
 ---
 
-## Table of Contents
+## 🏛️ Ecosystem Overview
 
-- [What is Opencode?](#what-is-opencode)
-- [Why Open Source Matters](#why-open-source-matters)
-- [Key Features](#key-features)
-- [How I Use It](#how-i-use-it-personally)
-- [Free Tier Guide](#free-tier-guide)
-- [Provider Setup](#provider-setup)
-- [Quick Start](#quick-start)
-- [The PLAN → EXECUTE Pattern](#the-plan--execute-pattern)
-- [Cost Optimization](#cost-optimization)
-- [Workflows](#workflows)
-- [Resources](#resources)
+| Capability | Feature | Description |
+| :--- | :--- | :--- |
+| **Provider Switcher** | `scripts/switch.sh` | Instantly rotate between Nvidia, OpenRouter, and Groq APIs. |
+| **Mechanical Agent** | `agents/mechanical.md` | Optimized for high-speed, repetitive refactoring and linting. |
+| **Local-First** | `Ollama/vLLM` | Fully air-gapped agentic execution for sensitive codebases. |
+| **Hybrid Flow** | `Bridge Logic` | Use Claude for Planning, use Opencode for the grunt work. |
 
 ---
 
-## What is Opencode?
+## 🚀 Quick Start
 
-Opencode is an open source agent that helps you write code in your terminal, IDE, or desktop. Key properties:
-
-- **LSP-enabled**: automatically loads the right Language Server Protocols for the LLM to understand your code
-- **Multi-provider**: bring your own model — Anthropic, OpenAI, Nvidia Build, OpenRouter, Moonshot, Minimax
-- **Free tier**: run on completely free models (Kimi K2.5, Minimax m2.5 via Nvidia Build or OpenRouter)
-- **Terminal-native**: no IDE required, works everywhere
-- **Open source**: fork, contribute, self-host
-
----
-
-## Why Open Source Matters
-
-In 2026, most AI coding tools are closed-source proprietary platforms. Opencode is different:
-
-1. **Transparency**: you can see exactly what it does with your code
-2. **Privacy control**: self-host for maximum data sovereignty
-3. **Provider freedom**: not locked into one AI company
-4. **Cost control**: use free APIs, avoid per-seat licensing
-5. **Community**: improvements from thousands of contributors
-6. **Customization**: fork and modify for your specific needs
-
----
-
-## Key Features
-
-### 🔌 LSP Integration
-```bash
-# Opencode automatically detects your project type
-# and loads the appropriate Language Server
-
-# TypeScript → typescript-language-server
-# Python → pylsp or pyright
-# Go → gopls
-# Rust → rust-analyzer
-# Java → jdtls
-
-# The LLM gets semantic understanding:
-# - Type information
-# - Import graph
-# - Error diagnostics
-# - Symbol definitions
-```
-
-### 🔄 Multi-Provider Support
-```json
-{
-  "provider": "openrouter",
-  "model": "minimax/minimax-m2.5",
-  "apiKey": "your-openrouter-key"
-}
-// Switch to Claude in seconds:
-{
-  "provider": "anthropic",
-  "model": "claude-sonnet-4-6"
-}
-```
+1. **Get Your Keys**: Obtain free/low-cost keys from [Nvidia Build](https://build.nvidia.com) or [OpenRouter](https://openrouter.ai).
+2. **Setup Environment**: Run `./scripts/setup.sh` and provide your API keys.
+3. **Choose Your Model**: Use `./scripts/switch.sh deepseek-v3` to set the active engine.
+4. **Execute**: Run `opencode "refactor all exports to named exports"` in your project root.
 
 ### 💰 Free Tier Operation
 ```bash
