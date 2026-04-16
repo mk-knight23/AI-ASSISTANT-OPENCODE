@@ -4,16 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OPENCODE | Kazi Musharraf</title>
-  <meta name="description" content="Open-Source Mechanical AI Coding Engine by Kazi Musharraf. Zero-cost execution at high velocity.">
+  <meta name="description" content="AI-ASSISTANT-OPENCODE: Zero-cost mechanical AI coding engine. Developed by Kazi Musharraf.">
   
-  <!-- UI UX Pro Max: Font & Style CDN -->
+  <!-- UI UX Pro Max: Minimalist Standard CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Outfit:wght@800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <script>
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
@@ -22,12 +21,12 @@
             heading: ['Outfit', 'sans-serif'],
           },
           colors: {
-            cyber: {
+            open: {
               black: '#000000',
-              gray: '#111111',
-              neon: '#39FF14',
-              toxic: '#CCFF00',
-              border: '#333333',
+              white: '#FFFFFF',
+              slate: '#64748B',
+              bg: '#F8FAFC',
+              border: '#E2E8F0',
             }
           }
         }
@@ -36,142 +35,143 @@
   </script>
 
   <style>
-    body { background-color: #000000; color: #39FF14; }
-    .brutalist-border {
-      border: 3px solid #333333;
-      box-shadow: 6px 6px 0px #111111;
+    body { background-color: #F8FAFC; color: #0F172A; overflow-x: hidden; }
+    .glass-pure {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 3px solid #000000;
+      box-shadow: 8px 8px 0px #E2E8F0;
     }
-    .brutalist-border:hover {
-      border-color: #39FF14;
-      box-shadow: 8px 8px 0px #39FF14;
-      transform: translate(-2px, -2px);
+    .glass-pure:hover {
+      box-shadow: 12px 12px 0px #000000;
+      transform: translate(-4px, -4px);
     }
-    .glitch-text {
-      text-shadow: 2px 2px #CCFF00;
+    .brutalist-btn {
+      border: 3px solid #000000;
+      box-shadow: 4px 4px 0px #000000;
+      transition: all 100ms;
     }
-    .scanline {
-      width: 100%;
-      height: 2px;
-      background: rgba(57, 255, 20, 0.1);
-      position: absolute;
-      animation: scan 4s linear infinite;
-      z-index: 50;
+    .brutalist-btn:active {
+      box-shadow: 0px 0px 0px #000000;
+      transform: translate(4px, 4px);
     }
-    @keyframes scan {
-      0% { top: 0; }
-      100% { top: 100%; }
+    .grid-bg {
+      background-image: radial-gradient(#CBD5E1 1px, transparent 1px);
+      background-size: 32px 32px;
     }
-    .neon-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-    ::-webkit-scrollbar { width: 10px; }
-    ::-webkit-scrollbar-track { background: #000000; }
-    ::-webkit-scrollbar-thumb { background: #333333; border: 2px solid #000000; }
-    ::-webkit-scrollbar-thumb:hover { background: #39FF14; }
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #F8FAFC; }
+    ::-webkit-scrollbar-thumb { background: #000000; }
   </style>
 </head>
 
-<body class="font-mono selection:bg-cyber-neon selection:text-black overflow-x-hidden relative">
+<body class="font-sans selection:bg-black selection:text-white relative">
 
-  <div class="scanline pointer-events-none"></div>
+  <div class="fixed inset-0 grid-bg -z-10"></div>
 
-  <!-- ─── HEADER ─── -->
-  <nav class="fixed top-0 left-0 right-0 z-[60] py-6 px-6 bg-black border-b-2 border-cyber-border">
+  <!-- ─── NAV ─── -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white border-b-4 border-black px-8 py-6">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-4">
-        <div class="w-8 h-8 bg-cyber-neon flex items-center justify-center text-black font-black">
+        <div class="w-10 h-10 bg-black flex items-center justify-center text-white font-black text-xl">
           OP
         </div>
-        <span class="font-heading font-black text-2xl uppercase tracking-tighter text-white">Opencode <span class="text-cyber-neon">_0/mo</span></span>
+        <span class="font-heading font-black text-3xl tracking-tighter uppercase italic">Opencode <span class="text-slate-400 font-light">_FREE</span></span>
       </div>
 
-      <div class="hidden md:flex items-center gap-10 text-[10px] uppercase font-bold tracking-[0.3em]">
-        <a href="#engine" class="hover:text-white transition-all underline decoration-cyber-border hover:decoration-cyber-neon decoration-2 underline-offset-8">Engine</a>
-        <a href="#providers" class="hover:text-white transition-all underline decoration-cyber-border hover:decoration-cyber-neon decoration-2 underline-offset-8">Providers</a>
-        <a href="#setup" class="hover:text-white transition-all underline decoration-cyber-border hover:decoration-cyber-neon decoration-2 underline-offset-8">Setup</a>
+      <div class="hidden md:flex items-center gap-12 text-[10px] font-black uppercase tracking-[0.4em] text-black">
+        <a href="#engine" class="hover:underline underline-offset-8">Engine</a>
+        <a href="#providers" class="hover:underline underline-offset-8">Providers</a>
+        <a href="#install" class="hover:underline underline-offset-8">Setup</a>
       </div>
 
-      <div class="flex items-center gap-4">
-        <span class="text-[9px] text-zinc-500 uppercase tracking-widest hidden sm:block">By Kazi Musharraf</span>
-        <a href="https://github.com/mk-knight23/AI-ASSISTANT-OPENCODE" target="_blank" class="p-2 border-2 border-cyber-border hover:border-cyber-neon transition-all">
-          <i data-lucide="terminal" class="w-5 h-5"></i>
+      <div class="flex items-center gap-6">
+        <div class="hidden sm:block text-right">
+          <p class="text-[8px] font-mono font-black uppercase tracking-[0.2em] leading-none mb-1">Lead Operator</p>
+          <p class="text-sm font-heading font-black uppercase tracking-tighter">Kazi Musharraf</p>
+        </div>
+        <a href="https://github.com/mk-knight23/AI-ASSISTANT-OPENCODE" target="_blank" class="w-11 h-11 border-2 border-black flex items-center justify-center hover:bg-black hover:text-white transition-all">
+          <i data-lucide="terminal" class="w-6 h-6"></i>
         </a>
       </div>
     </div>
   </nav>
 
   <!-- ─── HERO ─── -->
-  <header class="pt-48 pb-32 px-6">
-    <div class="max-w-5xl mx-auto">
+  <header class="pt-64 pb-32 px-6">
+    <div class="max-w-6xl mx-auto">
       <div class="flex flex-col items-start">
-        <div class="border-2 border-cyber-neon px-3 py-1 mb-10 inline-block bg-cyber-neon/10">
-          <span class="text-[10px] font-bold text-cyber-neon uppercase tracking-[0.2em] neon-pulse">Hacker Tier: Active | Port 8080 Open</span>
+        <div class="border-2 border-black px-4 py-1.5 mb-10 bg-white shadow-[4px_4px_0px_#000]">
+          <span class="text-[10px] font-black text-black uppercase tracking-[0.4em]">Opencore Build: v2026.4</span>
         </div>
         
-        <h1 class="text-7xl md:text-9xl font-heading font-black text-white leading-[0.85] tracking-tighter uppercase mb-12 italic">
-          Zero-Cost <br> <span class="text-cyber-neon glitch-text italic">Engineering.</span>
+        <h1 class="text-7xl md:text-[10rem] font-heading font-black text-black leading-[0.8] tracking-tighter uppercase mb-12 italic">
+          Zero-Cost <br> <span class="text-white bg-black px-4">Machines.</span>
         </h1>
         
-        <p class="text-xl md:text-2xl text-zinc-400 font-light max-w-3xl mb-16 leading-tight border-l-4 border-cyber-neon pl-8 italic">
-          High-velocity mechanical execution for the elite developer. No subscriptions. No limits. Optimized by <span class="text-white font-bold">Kazi Musharraf</span> for pure efficiency.
+        <p class="text-xl md:text-3xl text-slate-500 font-light max-w-4xl mb-20 leading-tight italic">
+          Raw, architectural, and efficient. The execution engine for the mechanical developer. Orchestrated by <span class="text-black font-black border-b-4 border-black">Kazi Musharraf</span> for peak performance at zero cost.
         </p>
 
-        <div class="flex flex-wrap gap-6 items-center">
-          <a href="#setup" class="bg-cyber-neon text-black px-12 py-5 font-black text-xl hover:translate-x-1 hover:-translate-y-1 transition-all brutalist-border uppercase italic">
-            Get Command CLI
+        <div class="flex flex-wrap gap-8 items-center">
+          <a href="#install" class="bg-black text-white px-14 py-6 font-black text-xl brutalist-btn uppercase italic">
+            Access Engine
           </a>
-          <a href="#engine" class="border-2 border-cyber-border p-5 font-bold hover:text-white hover:border-white transition-all uppercase text-sm">
-            Access Engine.log
+          <a href="#engine" class="border-4 border-black p-6 font-bold hover:bg-black hover:text-white transition-all uppercase text-sm tracking-widest italic">
+            Explore Hardware.log
           </a>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- ─── MECHANICAL ENGINE ─── -->
-  <section id="engine" class="py-32 px-6 border-y-2 border-cyber-border bg-cyber-gray">
+  <!-- ─── ENGINE RADIUS ─── -->
+  <section id="engine" class="py-32 px-6 border-y-4 border-black bg-white">
     <div class="max-w-7xl mx-auto">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
         <div>
-          <h2 class="text-xs font-bold tracking-[0.4em] uppercase text-zinc-500 mb-6">Execution Surface</h2>
-          <h3 class="text-5xl font-heading font-black text-white mb-10 leading-none">The Mechanical <br> Transformation Grunt.</h3>
+          <h2 class="text-xs font-black tracking-[0.6em] uppercase text-slate-400 mb-8">Mechanical Surface</h2>
+          <h3 class="text-5xl md:text-7xl font-heading font-black text-black mb-12 leading-[0.9] uppercase italic">The Logical <br> Grunt Engine.</h3>
           
-          <div class="space-y-4">
-            <div class="p-6 brutalist-border bg-black group transition-all">
-              <div class="flex items-center gap-4 mb-3">
-                <i data-lucide="cog" class="w-6 h-6 text-cyber-neon group-hover:rotate-180 transition-transform duration-1000"></i>
-                <h4 class="text-lg font-bold text-white uppercase italic">Grunt Execution</h4>
+          <div class="space-y-6">
+            <div class="glass-pure p-8 group">
+              <div class="flex items-center gap-6 mb-4">
+                <i data-lucide="cpu" class="w-10 h-10 group-hover:rotate-12 transition-transform"></i>
+                <h4 class="text-2xl font-heading font-black uppercase italic">High-Speed Parity</h4>
               </div>
-              <p class="text-sm text-zinc-500 font-light italic">Focused on speed and syntactic precision. Perfect for repetitive edits, boilerplate, and mass refactors.</p>
+              <p class="text-slate-500 text-sm font-light italic leading-relaxed">Mechanical execution with 100% adherence to architectural plans. Zero deviation. Zero latency.</p>
             </div>
             
-            <div class="p-6 brutalist-border bg-black group transition-all">
-              <div class="flex items-center gap-4 mb-3">
-                <i data-lucide="refresh-cw" class="w-6 h-6 text-cyber-toxic group-hover:rotate-90 transition-transform"></i>
-                <h4 class="text-lg font-bold text-white uppercase italic">Zero-Interaction Cycle</h4>
+            <div class="glass-pure p-8 group">
+              <div class="flex items-center gap-6 mb-4">
+                <i data-lucide="refresh-cw" class="w-10 h-10 group-hover:scale-110 transition-transform"></i>
+                <h4 class="text-2xl font-heading font-black uppercase italic">Model Rotation</h4>
               </div>
-              <p class="text-sm text-zinc-500 font-light italic">Follows implementation blueprints with zero deviation logic. Strictly deterministic mechanical coding.</p>
+              <p class="text-slate-500 text-sm font-light italic leading-relaxed">Automatic failover between Nvidia Build, OpenRouter, and Alibaba services.</p>
             </div>
           </div>
         </div>
 
-        <div class="bg-zinc-900 border-2 border-cyber-border p-4 relative">
-          <div class="absolute -top-3 -right-3 bg-cyber-neon text-black text-[10px] font-bold px-2 py-1">LIVE_SYNC</div>
-          <div class="aspect-video bg-black p-6 font-mono text-[11px] leading-relaxed overflow-hidden">
-            <p class="text-zinc-500 underline mb-4 tracking-widest uppercase">Opencode_Session.log</p>
-            <p class="text-cyber-neon"><span class="text-zinc-600">[RUN]</span> opencode apply migration.md</p>
-            <p class="text-zinc-400">→ Detected 14 schema updates</p>
-            <p class="text-zinc-400">→ Rotating to provider: <span class="text-cyber-toxic">NVIDIA (DeepSeek)</span></p>
-            <p class="text-zinc-400">→ Injecting context: .opencode/instructions.md</p>
-            <div class="mt-4 flex gap-1">
-              <div class="w-2 h-4 bg-cyber-neon animate-bounce"></div>
-              <div class="w-2 h-4 bg-cyber-neon animate-bounce [animation-delay:0.2s]"></div>
-              <div class="w-2 h-4 bg-cyber-neon animate-bounce [animation-delay:0.4s]"></div>
-            </div>
-            <p class="mt-8 text-white font-bold tracking-tighter">EXECUTION_SUCCESSFUL: 14/14 FILES PATCHED</p>
-          </div>
+        <div class="lg:w-full">
+           <div class="border-4 border-black bg-slate-900 p-8 font-mono text-sm shadow-[16px_16px_0px_#E2E8F0]">
+             <p class="text-slate-500 mb-6 uppercase tracking-[0.2em] border-b border-slate-800 pb-2 flex justify-between">
+               <span>Opencode_Core.bin</span>
+               <span class="text-emerald-400">STATUS: ON</span>
+             </p>
+             <div class="space-y-3 text-white">
+               <p><span class="text-slate-500">>>></span> opencode init --force</p>
+               <p><span class="text-slate-500">>>></span> Loading: <span class="text-emerald-400">Nvidia_Build_Driver</span></p>
+               <p><span class="text-slate-500">>>></span> Context Injecting: <span class="text-amber-400">./ecosystem/rules</span></p>
+               <p><span class="text-slate-500">>>></span> Executing transformation...</p>
+               <div class="pt-6">
+                 <div class="w-full h-1 bg-slate-800 rounded-full">
+                   <div class="w-3/4 h-full bg-white"></div>
+                 </div>
+               </div>
+               <p class="text-[10px] text-slate-500 pt-4 uppercase tracking-[0.4em]">75% Parity Achieved</p>
+             </div>
+           </div>
         </div>
       </div>
     </div>
@@ -179,94 +179,91 @@
 
   <!-- ─── PROVIDERS ─── -->
   <section id="providers" class="py-32 px-6">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex flex-col md:flex-row items-end justify-between mb-20 gap-8">
-        <div class="max-w-xl">
-          <h2 class="text-xs font-bold tracking-[0.5em] uppercase text-zinc-500 mb-6">Source Map</h2>
-          <h3 class="text-5xl font-heading font-black text-white leading-none">The Hacker Tier Hub.</h3>
-        </div>
-        <p class="text-zinc-500 max-w-xs text-sm italic">Connect to the world's most powerful open-source models without the overhead.</p>
+    <div class="max-w-7xl mx-auto flex flex-col items-center">
+      <div class="text-center mb-24">
+        <h2 class="text-xs font-black tracking-[0.8em] uppercase text-slate-400 mb-8">Hardware Hub</h2>
+        <h3 class="text-4xl md:text-6xl font-heading font-black uppercase italic">Provider Roster.</h3>
       </div>
 
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-        <div class="brutalist-border p-8 bg-black flex flex-col items-center group transition-all">
-          <i data-lucide="cpu" class="w-10 h-10 mb-6 text-cyber-neon group-hover:scale-125 transition-transform"></i>
-          <span class="font-bold text-white uppercase italic tracking-widest">DeepSeek V3</span>
-          <span class="text-[9px] mt-2 text-zinc-600 uppercase font-black">Powered by NVIDIA</span>
+      <div class="flex flex-wrap justify-center gap-12 max-w-4xl">
+        <div class="flex flex-col items-center gap-4">
+          <div class="w-24 h-24 border-4 border-black flex items-center justify-center hover:bg-black hover:text-white transition-all group">
+            <i data-lucide="zap" class="w-10 h-10 group-hover:scale-125 transition-transform"></i>
+          </div>
+          <span class="text-[10px] font-black uppercase tracking-[0.2em]">NVIDIA</span>
         </div>
-        <div class="brutalist-border p-8 bg-black flex flex-col items-center group transition-all">
-          <i data-lucide="globe" class="w-10 h-10 mb-6 text-cyber-toxic group-hover:scale-125 transition-transform"></i>
-          <span class="font-bold text-white uppercase italic tracking-widest">Gemini 2.0</span>
-          <span class="text-[9px] mt-2 text-zinc-600 uppercase font-black">OpenRouter Free tier</span>
+        <div class="flex flex-col items-center gap-4">
+          <div class="w-24 h-24 border-4 border-black flex items-center justify-center hover:bg-black hover:text-white transition-all group">
+            <i data-lucide="globe" class="w-10 h-10 group-hover:scale-125 transition-transform"></i>
+          </div>
+          <span class="text-[10px] font-black uppercase tracking-[0.2em]">OpenRouter</span>
         </div>
-        <div class="brutalist-border p-8 bg-black flex flex-col items-center group transition-all">
-          <i data-lucide="zap" class="w-10 h-10 mb-6 text-cyber-neon group-hover:scale-125 transition-transform"></i>
-          <span class="font-bold text-white uppercase italic tracking-widest">Qwen Coder</span>
-          <span class="text-[9px] mt-2 text-zinc-600 uppercase font-black">Local Execution</span>
+        <div class="flex flex-col items-center gap-4">
+          <div class="w-24 h-24 border-4 border-black flex items-center justify-center hover:bg-black hover:text-white transition-all group">
+            <i data-lucide="cloud" class="w-10 h-10 group-hover:scale-125 transition-transform"></i>
+          </div>
+          <span class="text-[10px] font-black uppercase tracking-[0.2em]">Alibaba</span>
         </div>
-        <div class="brutalist-border p-8 bg-black flex flex-col items-center group transition-all">
-          <i data-lucide="command" class="w-10 h-10 mb-6 text-cyber-toxic group-hover:scale-125 transition-transform"></i>
-          <span class="font-bold text-white uppercase italic tracking-widest">Llama 3.3</span>
-          <span class="text-[9px] mt-2 text-zinc-600 uppercase font-black">Infrastructure-Layer</span>
+        <div class="flex flex-col items-center gap-4">
+          <div class="w-24 h-24 border-4 border-black flex items-center justify-center hover:bg-black hover:text-white transition-all group">
+            <i data-lucide="server" class="w-10 h-10 group-hover:scale-125 transition-transform"></i>
+          </div>
+          <span class="text-[10px] font-black uppercase tracking-[0.2em]">Groq</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ─── SETUP ─── -->
-  <section id="setup" class="py-32 px-6 border-t-4 border-cyber-neon bg-zinc-950">
+  <!-- ─── INSTALL ─── -->
+  <section id="install" class="py-48 px-6 border-t-4 border-black bg-white">
     <div class="max-w-4xl mx-auto text-center">
-      <h3 class="text-5xl md:text-8xl font-heading font-black text-white mb-16 tracking-tighter uppercase italic">Stay <br> <span class="text-cyber-neon underline decoration-white decoration-8">Sovereign.</span></h3>
+      <h3 class="text-5xl md:text-8xl font-heading font-black text-black mb-16 tracking-tighter uppercase italic">Boot the <br> <span class="bg-black text-white px-6">System.</span></h3>
       
-      <div class="p-8 brutalist-border bg-black text-left mb-16">
-        <div class="flex items-center justify-between mb-8 opacity-40">
-          <div class="flex gap-2">
-            <div class="w-2 h-2 bg-white"></div>
-            <div class="w-2 h-2 bg-white"></div>
-            <div class="w-2 h-2 bg-white"></div>
-          </div>
-          <span class="text-xs font-bold uppercase tracking-[0.2em]">Terminal Install</span>
+      <div class="w-full border-4 border-black p-6 bg-slate-50 mb-16 flex flex-col md:flex-row items-center gap-6 group hover:translate-x-2 hover:-translate-y-2 transition-all">
+        <div class="flex-1 font-mono text-2xl py-6 px-10 text-black overflow-x-auto whitespace-nowrap scrollbar-hide text-left">
+          npm install -g opencode-ai
         </div>
-        <div class="font-mono text-lg text-cyber-neon flex items-center justify-between overflow-hidden">
-          <span class="whitespace-nowrap italic">$ npm install -g opencode-ai</span>
-          <i data-lucide="terminal" class="w-6 h-6 animate-pulse"></i>
-        </div>
+        <button class="bg-black text-white px-14 py-6 font-black text-xl brutalist-btn uppercase active:scale-95">
+          Install
+        </button>
       </div>
 
-      <div class="flex flex-wrap justify-center gap-12 text-[10px] font-black tracking-[0.4em] uppercase text-zinc-500 italic">
-        <div class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-cyber-neon"></i> Local Sovereignty</div>
-        <div class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-cyber-neon"></i> Zero Cost</div>
-        <div class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-cyber-neon"></i> High Parity</div>
+      <div class="flex flex-wrap justify-center gap-12 text-[10px] font-black tracking-[0.5em] text-slate-400 italic">
+        <div class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-black"></i> Open Source</div>
+        <div class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-black"></i> Zero Token Cost</div>
+        <div class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-black"></i> Raw Utility</div>
       </div>
     </div>
   </section>
 
   <!-- ─── FOOTER ─── -->
-  <footer class="py-24 px-6 border-t-2 border-cyber-border bg-black">
+  <footer class="py-24 px-6 border-t-4 border-black bg-slate-50">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-16">
       <div class="text-center md:text-left">
-        <div class="flex items-center justify-center md:justify-start gap-4 mb-4">
-          <div class="w-8 h-8 bg-cyber-neon flex items-center justify-center text-black font-black uppercase">OP</div>
-          <span class="font-heading font-black text-2xl uppercase tracking-widest text-white italic">OPENCODE</span>
+        <div class="flex items-center justify-center md:justify-start gap-4 mb-6">
+          <div class="w-10 h-10 bg-black flex items-center justify-center text-white font-black text-xl uppercase">OP</div>
+          <span class="font-heading font-black text-2xl text-black uppercase tracking-widest italic">OPENCODE</span>
         </div>
-        <p class="text-[10px] text-zinc-600 font-bold uppercase tracking-widest mb-4">The Grunt Execution Engine</p>
-        <p class="text-xs text-zinc-500 font-light max-w-xs italic">A cost-focused AI ecosystem upgrade for the modern hacker. Local models. Global efficiency.</p>
+        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-[0.8em] mb-4">The Grunt Execution Engine</p>
+        <p class="text-xs text-slate-500 font-light max-w-xs italic italic italic">A raw, minimalist showcase of autonomous execution engines. Designed for transparency and 0$ operational costs.</p>
       </div>
 
       <div class="flex flex-col items-center">
-        <div class="flex gap-10 mb-10">
-          <a href="#" class="text-zinc-600 hover:text-cyber-neon transition-all"><i data-lucide="twitter" class="w-6 h-6"></i></a>
-          <a href="https://github.com/mk-knight23" class="text-zinc-600 hover:text-cyber-neon transition-all"><i data-lucide="github" class="w-6 h-6"></i></a>
-          <a href="#" class="text-zinc-600 hover:text-cyber-neon transition-all"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+        <div class="flex gap-12 mb-10">
+          <a href="#" class="text-slate-300 hover:text-black transition-all scale-150"><i data-lucide="twitter" class="w-6 h-6"></i></a>
+          <a href="https://github.com/mk-knight23" class="text-slate-300 hover:text-black transition-all scale-150"><i data-lucide="github" class="w-6 h-6"></i></a>
+          <a href="#" class="text-slate-300 hover:text-black transition-all scale-150"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
         </div>
-        <p class="text-[9px] uppercase tracking-[0.5em] font-heading font-black text-zinc-800">
-          ENGINEERED BY <span class="text-cyber-neon italic">KAZI MUSHARRAF</span>
-        </p>
+        <div class="px-10 py-3 bg-black text-white border-2 border-black">
+            <p class="text-[10px] uppercase tracking-[1em] font-heading font-black leading-none">
+              BY <span class="italic">KAZI MUSHARRAF</span>
+            </p>
+        </div>
       </div>
 
-      <div class="text-zinc-600 text-[10px] font-mono text-center md:text-right">
-        &copy; 2026 CYBER_BRUTALIST_COUNCIL <br>
-        SYSTEM_ID: OPEN_SOURCE_001
+      <div class="text-[10px] font-mono text-slate-400 text-center md:text-right">
+        &copy; 2026 BRUTALIST_MASTERY <br>
+        VERSION: 0.1.0_ALPHA
       </div>
     </div>
   </footer>
@@ -274,17 +271,16 @@
   <script>
     lucide.createIcons();
 
-    // Scroll reveal logic
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('opacity-100', 'translate-x-0', 'translate-y-0');
+          entry.target.classList.add('opacity-100', 'translate-y-0');
         }
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.brutalist-border, h1, h3').forEach(el => {
-      el.classList.add('transition-all', 'duration-[800ms]', 'opacity-0', 'translate-y-10');
+    document.querySelectorAll('.glass-pure, h1, h3, .brutalist-btn, #engine img').forEach(el => {
+      el.classList.add('transition-all', 'duration-[800ms]', 'opacity-0', 'translate-y-12');
       observer.observe(el);
     });
   </script>
