@@ -9,15 +9,18 @@ jobs:
   audit_and_test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
       - name: Security Scan (Gitleaks)
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Dependency Audit
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - name: Validate static showcase and configuration
+        run: node --test test/showcase.test.cjs
+      - name: Validate shell script syntax
         run: |
-          if [ -f "package.json" ]; then npm audit --audit-level=high; fi
-          if [ -f "requirements.txt" ]; then pip install safety && safety check; fi
-      - name: Build & Type Check
-        run: |
-          if [ -f "package.json" ]; then npm install && (npm run build || echo "No build script"); fi
+          if [ -d scripts ]; then find scripts -type f -name '*.sh' -exec bash -n {} +; fi

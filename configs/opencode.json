@@ -1,69 +1,21 @@
-# OpenCode Multi-Provider Configuration
-# File: ~/.config/opencode/config.json (or opencode.json in project root)
-
 {
-  "providers": {
+  "$schema": "https://opencode.ai/config.json",
+  "model": "{env:OPENCODE_MODEL}",
+  "provider": {
     "anthropic": {
-      "apiKey": "YOUR_ANTHROPIC_API_KEY",
-      "models": {
-        "large": "claude-opus-4-6",
-        "medium": "claude-sonnet-4-6",
-        "small": "claude-haiku-4-5-20251001"
+      "options": {
+        "apiKey": "{env:ANTHROPIC_API_KEY}"
       }
     },
     "openai": {
-      "apiKey": "YOUR_OPENAI_API_KEY",
-      "models": {
-        "large": "gpt-4o",
-        "medium": "gpt-4o-mini",
-        "small": "gpt-3.5-turbo"
+      "options": {
+        "apiKey": "{env:OPENAI_API_KEY}"
       }
-    },
-    "nvidia-build": {
-      "apiKey": "YOUR_NVIDIA_BUILD_API_KEY",
-      "baseUrl": "https://integrate.api.nvidia.com/v1",
-      "models": {
-        "free-large": "moonshotai/kimi-k2",
-        "free-medium": "MiniMax/MiniMax-M1-40k",
-        "free-small": "google/gemma-3n-e4b-it"
-      },
-      "note": "FREE tier available — sign up at build.nvidia.com"
-    },
-    "openrouter": {
-      "apiKey": "YOUR_OPENROUTER_KEY",
-      "baseUrl": "https://openrouter.ai/api/v1",
-      "models": {
-        "free": "mistralai/mistral-7b-instruct:free",
-        "free-large": "meta-llama/llama-3.1-8b-instruct:free"
-      },
-      "note": "Many FREE models available at openrouter.ai"
     },
     "google": {
-      "apiKey": "YOUR_GOOGLE_API_KEY",
-      "models": {
-        "large": "gemini-2.0-flash-thinking-exp",
-        "medium": "gemini-2.0-flash",
-        "small": "gemini-1.5-flash"
+      "options": {
+        "apiKey": "{env:GOOGLE_API_KEY}"
       }
-    }
-  },
-
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-sonnet-4-6",
-
-  "workflows": {
-    "plan-execute": {
-      "description": "Use expensive model for planning, free model for execution",
-      "plan": { "provider": "anthropic", "model": "claude-opus-4-6" },
-      "execute": { "provider": "nvidia-build", "model": "moonshotai/kimi-k2" }
-    },
-    "code-review": {
-      "provider": "anthropic",
-      "model": "claude-sonnet-4-6"
-    },
-    "quick-edit": {
-      "provider": "nvidia-build",
-      "model": "MiniMax/MiniMax-M1-40k"
     }
   }
 }
