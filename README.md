@@ -369,3 +369,7 @@ This project follows security best practices:
 - Dependency scanning enabled
 - Security headers configured
 - Regular security audits performed
+
+## Repository validation
+
+This repository contains a static showcase and agent/workflow documentation. It has no Node package manifest, so CI runs `node --test test/showcase.test.cjs` and shell syntax checks directly rather than npm install, build or audit. Secret scanning remains enabled with full checkout history.
